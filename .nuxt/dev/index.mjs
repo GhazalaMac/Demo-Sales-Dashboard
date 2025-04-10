@@ -10,7 +10,6 @@ import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash,
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/G-Mac/Desktop/my-demo/node_modules/unhead/dist/server.mjs';
 import { isVNode, toValue, isRef } from 'file://C:/Users/G-Mac/Desktop/my-demo/node_modules/vue/index.mjs';
 import { walkResolver } from 'file://C:/Users/G-Mac/Desktop/my-demo/node_modules/unhead/dist/utils.mjs';
-import { renderToString } from 'file://C:/Users/G-Mac/Desktop/my-demo/node_modules/vue/server-renderer/index.mjs';
 import { klona } from 'file://C:/Users/G-Mac/Desktop/my-demo/node_modules/klona/dist/index.mjs';
 import defu, { defuFn } from 'file://C:/Users/G-Mac/Desktop/my-demo/node_modules/defu/dist/defu.mjs';
 import { snakeCase } from 'file://C:/Users/G-Mac/Desktop/my-demo/node_modules/scule/dist/index.mjs';
@@ -631,9 +630,6 @@ const _inlineRuntimeConfig = {
       "/__nuxt_error": {
         "cache": false
       },
-      "/confirm": {
-        "ssr": false
-      },
       "/_nuxt/builds/meta/**": {
         "headers": {
           "cache-control": "public, max-age=31536000, immutable"
@@ -647,30 +643,10 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "supabase": {
-      "url": "",
-      "key": "",
-      "redirect": true,
-      "redirectOptions": {
-        "login": "/login",
-        "callback": "/confirm",
-        "exclude": [],
-        "cookieRedirect": false,
-        "saveRedirectToCookie": false
-      },
-      "cookieName": "sb",
-      "cookiePrefix": "",
-      "useSsrCookies": true,
-      "cookieOptions": {
-        "maxAge": 28800,
-        "sameSite": "lax",
-        "secure": true
-      },
-      "clientOptions": {}
-    }
-  },
-  "supabase": {
-    "serviceKey": ""
+    "SUPABASE_URL": "https://zunhtytidfigjjkzzzsy.supabase.co",
+    "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1bmh0eXRpZGZpZ2pqa3p6enN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMTI2MjcsImV4cCI6MjA1OTc4ODYyN30.qPl8JhtEJCROvJtfqmfyuzt8iox3TEyzojF24fNCWKM",
+    "POWERSYNC_INSTANCE_URL": "https://zunhtytidfigjjkzzzsy.supabase.co",
+    "POWERSYNC_PROJECT": "67f68d7dff7d96000732e0f3"
   }
 };
 const envOptions = {
@@ -1490,32 +1466,7 @@ function publicAssetsURL(...path) {
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
 const getClientManifest = () => import('file://C:/Users/G-Mac/Desktop/my-demo/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
-const getServerEntry = () => import('file://C:/Users/G-Mac/Desktop/my-demo/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
-const getSSRRenderer = lazyCachedFunction(async () => {
-  const manifest = await getClientManifest();
-  if (!manifest) {
-    throw new Error("client.manifest is not available");
-  }
-  const createSSRApp = await getServerEntry();
-  if (!createSSRApp) {
-    throw new Error("Server bundle is not available");
-  }
-  const options = {
-    manifest,
-    renderToString: renderToString$1,
-    buildAssetsURL
-  };
-  const renderer = createRenderer(createSSRApp, options);
-  async function renderToString$1(input, context) {
-    const html = await renderToString(input, context);
-    if (process.env.NUXT_VITE_NODE_OPTIONS) {
-      renderer.rendererContext.updateManifest(await getClientManifest());
-    }
-    return APP_ROOT_OPEN_TAG + html + APP_ROOT_CLOSE_TAG;
-  }
-  return renderer;
-});
 const getSPARenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();
   const spaTemplate = await Promise.resolve().then(function () { return _virtual__spaTemplate; }).then((r) => r.template).catch(() => "").then((r) => {
@@ -1576,7 +1527,7 @@ function renderPayloadJsonScript(opts) {
     "type": "application/json",
     "innerHTML": contents,
     "data-nuxt-data": appId,
-    "data-ssr": !(opts.ssrContext.noSSR)
+    "data-ssr": false
   };
   {
     payload.id = "__NUXT_DATA__";
@@ -1664,7 +1615,7 @@ const renderer = defineRenderHandler(async (event) => {
     url,
     event,
     runtimeConfig: useRuntimeConfig(event),
-    noSSR: event.context.nuxt?.noSSR || routeOptions.ssr === false && !isRenderingIsland || (false),
+    noSSR: true,
     head,
     error: !!ssrError,
     nuxt: void 0,
@@ -1674,7 +1625,7 @@ const renderer = defineRenderHandler(async (event) => {
     modules: /* @__PURE__ */ new Set(),
     islandContext
   };
-  const renderer = ssrContext.noSSR ? await getSPARenderer() : await getSSRRenderer();
+  const renderer = await getSPARenderer() ;
   const _rendered = await renderer.renderToString(ssrContext).catch(async (error) => {
     if (ssrContext._renderResponse && error.message === "skipping render") {
       return {};
