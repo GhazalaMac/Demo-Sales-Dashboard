@@ -631,6 +631,9 @@ const _inlineRuntimeConfig = {
       "/__nuxt_error": {
         "cache": false
       },
+      "/confirm": {
+        "ssr": false
+      },
       "/_nuxt/builds/meta/**": {
         "headers": {
           "cache-control": "public, max-age=31536000, immutable"
@@ -643,7 +646,32 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {}
+  "public": {
+    "supabase": {
+      "url": "",
+      "key": "",
+      "redirect": true,
+      "redirectOptions": {
+        "login": "/login",
+        "callback": "/confirm",
+        "exclude": [],
+        "cookieRedirect": false,
+        "saveRedirectToCookie": false
+      },
+      "cookieName": "sb",
+      "cookiePrefix": "",
+      "useSsrCookies": true,
+      "cookieOptions": {
+        "maxAge": 28800,
+        "sameSite": "lax",
+        "secure": true
+      },
+      "clientOptions": {}
+    }
+  },
+  "supabase": {
+    "serviceKey": ""
+  }
 };
 const envOptions = {
   prefix: "NITRO_",
