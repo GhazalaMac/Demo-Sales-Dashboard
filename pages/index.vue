@@ -285,6 +285,7 @@
   import { BarChart, PieChart, LineChart } from 'echarts/charts';
   import { GridComponent, TooltipComponent, LegendComponent, TitleComponent } from 'echarts/components';
   import VChart from 'vue-echarts';
+import { useSupabaseClient } from '~/composable/useSupabaseClient';
   
   // Configure ECharts
   use([
@@ -302,14 +303,15 @@
   const lineChartOption = ref({});
   const barChartOption = ref({});
   const isLoading = ref(true);
-  
+  const supabase = await useSupabaseClient()
   // Fetch data from Supabase
   const fetchData = async () => {
-    const { data: monthlySalesData, error: monthlySalesError } = await useNuxtApp().$supabase
+    const { data: monthlySalesData, error: monthlySalesError } = await supabase//useNuxtApp().$supabase
       .from('monthly_sales')
       .select('*');
-  
-    const { data: productSalesData, error: productSalesError } = await useNuxtApp().$supabase
+  console.clear();
+  console.log("eee",monthlySalesError)
+    const { data: productSalesData, error: productSalesError } = await supabase//useNuxtApp().$supabase
       .from('product_sales')
       .select('*');
   

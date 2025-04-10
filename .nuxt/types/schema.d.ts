@@ -64,7 +64,13 @@ declare module 'nuxt/schema' {
    },
   }
   interface PublicRuntimeConfig {
+   SUPABASE_URL: string,
 
+   SUPABASE_KEY: string,
+
+   POWERSYNC_INSTANCE_URL: string,
+
+   POWERSYNC_PROJECT: string,
   }
 }
 declare module 'vue' {
