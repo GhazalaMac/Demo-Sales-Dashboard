@@ -275,6 +275,21 @@
           </div>
         </div>
       </div>
+
+      <div>
+      <p>Product Sales Grid</p>
+      <!-- Loading state -->
+      <div v-if="loading">Loading data...</div>
+      <!-- AG Grid component, displayed once data is loaded -->
+      <ag-grid-vue
+        v-else
+        class="ag-theme-alpine"
+        style="height: 500px; width: 100%"
+        :rowData="rowData"
+        :columnDefs="colDefs"
+        :defaultColDef="defaultColDef"
+      />
+    </div>
     </div>
   </template>
   
@@ -285,7 +300,8 @@
   import { BarChart, PieChart, LineChart } from 'echarts/charts';
   import { GridComponent, TooltipComponent, LegendComponent, TitleComponent } from 'echarts/components';
   import VChart from 'vue-echarts';
-import { useSupabaseClient } from '~/composable/useSupabaseClient';
+  import { useSupabaseClient } from '~/composable/useSupabaseClient';
+
   
   // Configure ECharts
   use([
@@ -298,7 +314,7 @@ import { useSupabaseClient } from '~/composable/useSupabaseClient';
     LegendComponent,
     TitleComponent
   ]);
-  
+
   const pieChartOption = ref({});
   const lineChartOption = ref({});
   const barChartOption = ref({});
@@ -410,6 +426,7 @@ import { useSupabaseClient } from '~/composable/useSupabaseClient';
   onMounted(() => {
     fetchData();
   });
+  
   
   </script>
   
