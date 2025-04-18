@@ -643,9 +643,9 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "SUPABASE_URL": "https://zunhtytidfigjjkzzzsy.supabase.co",
-    "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1bmh0eXRpZGZpZ2pqa3p6enN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMTI2MjcsImV4cCI6MjA1OTc4ODYyN30.qPl8JhtEJCROvJtfqmfyuzt8iox3TEyzojF24fNCWKM",
-    "POWERSYNC_INSTANCE_URL": "https://zunhtytidfigjjkzzzsy.supabase.co",
+    "SUPABASE_URL": "",
+    "SUPABASE_KEY": "",
+    "POWERSYNC_INSTANCE_URL": "https://67f6e4d477c5eae85058a6d2.powersync.journeyapps.com",
     "POWERSYNC_PROJECT": "67f68d7dff7d96000732e0f3"
   }
 };
